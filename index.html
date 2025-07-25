@@ -63,6 +63,47 @@
       left: 0;
       color: green;
     }
+    form {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      max-width: 600px;
+      margin-top: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      font-family: inherit;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
     footer {
       text-align: center;
       padding: 20px;
@@ -102,8 +143,22 @@
 
   <section id="contact">
     <h2>Contact</h2>
-    <p>Email us: <a href="mailto:hello@myai.tools">hello@myai.tools</a></p>
+    <p>Send us a message below or email us at <a href="mailto:hello@myai.tools">hello@myai.tools</a>.</p>
     <p>Or connect on <a href="https://linkedin.com" target="_blank">LinkedIn</a></p>
+
+    <form action="https://formspree.io/f/mzzvreak" method="POST">
+      <label>
+        Your email:
+        <input type="email" name="email" required>
+      </label>
+
+      <label>
+        Your message:
+        <textarea name="message" required></textarea>
+      </label>
+
+      <button type="submit">Send</button>
+    </form>
   </section>
 
   <footer>
