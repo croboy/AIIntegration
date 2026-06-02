@@ -57,14 +57,20 @@
       border-color: rgba(255,255,255,0.06);
     }
     .nav-logo {
-      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-wordmark {
+      font-size: 1.18rem;
       font-weight: 800;
       background: var(--grad);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-decoration: none;
       letter-spacing: -0.01em;
+      line-height: 1;
     }
     .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
     .nav-links a {
@@ -245,7 +251,7 @@
       max-width: 960px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 16px;
       text-align: center;
     }
@@ -590,6 +596,11 @@
       gap: 16px;
     }
     .foot-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .foot-logo-wordmark {
       font-size: 1.1rem;
       font-weight: 800;
       background: var(--grad);
@@ -841,7 +852,32 @@
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo">AI Integration</a>
+  <a href="#" class="nav-logo" aria-label="AI Integration">
+    <svg viewBox="0 0 36 36" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="logo-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6366f1"/>
+          <stop offset="100%" stop-color="#06b6d4"/>
+        </linearGradient>
+      </defs>
+      <rect width="36" height="36" rx="9" fill="url(#logo-g)"/>
+      <line x1="10" y1="10" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="18" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="26" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="10" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="18" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="26" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="19" y1="15" x2="27" y2="18" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="19" y1="22" x2="27" y2="18" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <circle cx="10" cy="10" r="2.4" fill="white"/>
+      <circle cx="10" cy="18" r="2.4" fill="white"/>
+      <circle cx="10" cy="26" r="2.4" fill="white"/>
+      <circle cx="19" cy="15" r="2.4" fill="white"/>
+      <circle cx="19" cy="22" r="2.4" fill="white"/>
+      <circle cx="27" cy="18" r="2.9" fill="white"/>
+    </svg>
+    <span class="nav-logo-wordmark">AI Integration</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
@@ -881,14 +917,6 @@
 <!-- STATS -->
 <div class="stats-bar">
   <div class="stats-grid">
-    <div class="stat-divider">
-      <div class="stat-num" data-target="50" data-suffix="+">0+</div>
-      <div class="stat-label">Businesses Automated</div>
-    </div>
-    <div class="stat-divider">
-      <div class="stat-num" data-target="200" data-suffix="%">0%</div>
-      <div class="stat-label">Avg. Efficiency Gain</div>
-    </div>
     <div class="stat-divider">
       <div class="stat-num" data-target="24" data-suffix="/7">0/7</div>
       <div class="stat-label">AI Always On</div>
@@ -1053,7 +1081,7 @@
         </div>
         <div class="contact-detail">
           <div class="cd-icon">🌏</div>
-          <span>Serving businesses Australia-wide</span>
+          <span>Serving businesses in Australia &amp; worldwide</span>
         </div>
       </div>
 
@@ -1110,7 +1138,32 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="foot-logo">AI Integration</div>
+  <div class="foot-logo">
+    <svg viewBox="0 0 36 36" width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="foot-logo-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6366f1"/>
+          <stop offset="100%" stop-color="#06b6d4"/>
+        </linearGradient>
+      </defs>
+      <rect width="36" height="36" rx="9" fill="url(#foot-logo-g)"/>
+      <line x1="10" y1="10" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="18" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="26" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="10" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="18" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="26" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="19" y1="15" x2="27" y2="18" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="19" y1="22" x2="27" y2="18" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <circle cx="10" cy="10" r="2.4" fill="white"/>
+      <circle cx="10" cy="18" r="2.4" fill="white"/>
+      <circle cx="10" cy="26" r="2.4" fill="white"/>
+      <circle cx="19" cy="15" r="2.4" fill="white"/>
+      <circle cx="19" cy="22" r="2.4" fill="white"/>
+      <circle cx="27" cy="18" r="2.9" fill="white"/>
+    </svg>
+    <span class="foot-logo-wordmark">AI Integration</span>
+  </div>
   <p>&copy; 2026 NSP IT &mdash; Next Step IT Solutions. All rights reserved.</p>
 </footer>
 
