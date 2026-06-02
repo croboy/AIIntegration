@@ -57,14 +57,20 @@
       border-color: rgba(255,255,255,0.06);
     }
     .nav-logo {
-      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-wordmark {
+      font-size: 1.18rem;
       font-weight: 800;
       background: var(--grad);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-decoration: none;
       letter-spacing: -0.01em;
+      line-height: 1;
     }
     .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
     .nav-links a {
@@ -245,7 +251,7 @@
       max-width: 960px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 16px;
       text-align: center;
     }
@@ -590,6 +596,11 @@
       gap: 16px;
     }
     .foot-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .foot-logo-wordmark {
       font-size: 1.1rem;
       font-weight: 800;
       background: var(--grad);
@@ -623,13 +634,250 @@
       .services-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
+
+    /* ---- Chat Widget ---- */
+    .chat-fab {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--grad);
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px rgba(99,102,241,0.45);
+      z-index: 200;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .chat-fab:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(99,102,241,0.6); }
+    .chat-fab svg { width: 24px; height: 24px; fill: white; transition: opacity 0.2s; }
+    .chat-fab .icon-close { display: none; }
+    .chat-fab.open .icon-chat  { display: none; }
+    .chat-fab.open .icon-close { display: block; }
+
+    .chat-panel {
+      position: fixed;
+      bottom: 96px; right: 28px;
+      width: 360px;
+      max-height: 520px;
+      background: #0f0f24;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,102,241,0.15);
+      display: flex; flex-direction: column;
+      z-index: 199;
+      overflow: hidden;
+      transform: translateY(16px) scale(0.96);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), opacity 0.25s ease;
+    }
+    .chat-panel.open {
+      transform: none;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .chat-header {
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(99,102,241,0.07);
+      flex-shrink: 0;
+    }
+    .chat-bot-avatar {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, rgba(99,102,241,0.3), rgba(6,182,212,0.3));
+      border: 1px solid rgba(99,102,241,0.35);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .chat-header-info h4 { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+    .chat-header-info span { font-size: 0.75rem; color: #4ade80; display: flex; align-items: center; gap: 4px; }
+    .chat-header-info span::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .chat-close-btn {
+      margin-left: auto;
+      background: none; border: none; cursor: pointer;
+      color: var(--sub); font-size: 1.2rem;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .chat-close-btn:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(99,102,241,0.3) transparent;
+    }
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.3); border-radius: 2px; }
+
+    .chat-msg {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      animation: msgIn 0.3s ease both;
+    }
+    @keyframes msgIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .chat-msg.user { flex-direction: row-reverse; }
+    .msg-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(6,182,212,0.25));
+      border: 1px solid rgba(99,102,241,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+    .msg-bubble {
+      max-width: 78%;
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 0.875rem;
+      line-height: 1.55;
+    }
+    .chat-msg.bot  .msg-bubble {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+      border-bottom-left-radius: 4px;
+    }
+    .chat-msg.user .msg-bubble {
+      background: var(--grad);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-typing {
+      display: flex; gap: 4px; align-items: center;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      border-bottom-left-radius: 4px;
+      width: fit-content;
+    }
+    .typing-dot {
+      width: 6px; height: 6px;
+      background: var(--sub);
+      border-radius: 50%;
+      animation: typingBounce 1.2s ease infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBounce {
+      0%,60%,100% { transform: translateY(0); }
+      30%          { transform: translateY(-5px); }
+    }
+
+    .chat-suggestions {
+      padding: 0 16px 12px;
+      display: flex; flex-wrap: wrap; gap: 6px;
+      flex-shrink: 0;
+    }
+    .chat-suggestion {
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.22);
+      color: #a5b4fc;
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .chat-suggestion:hover { background: rgba(99,102,241,0.2); border-color: rgba(99,102,241,0.4); }
+
+    .chat-input-row {
+      padding: 12px 14px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .chat-input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 10px 16px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .chat-input::placeholder { color: rgba(148,163,184,0.45); }
+    .chat-input:focus { border-color: var(--accent); background: rgba(99,102,241,0.06); }
+    .chat-send-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--grad);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 16px rgba(99,102,241,0.35);
+    }
+    .chat-send-btn:hover { transform: scale(1.1); box-shadow: 0 0 24px rgba(99,102,241,0.5); }
+    .chat-send-btn svg { width: 16px; height: 16px; fill: white; }
+
+    @media (max-width: 600px) {
+      .chat-panel { right: 12px; left: 12px; width: auto; bottom: 88px; }
+      .chat-fab   { bottom: 20px; right: 20px; }
+    }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo">AI Integration</a>
+  <a href="#" class="nav-logo" aria-label="AI Integration">
+    <svg viewBox="0 0 36 36" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="logo-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6366f1"/>
+          <stop offset="100%" stop-color="#06b6d4"/>
+        </linearGradient>
+      </defs>
+      <rect width="36" height="36" rx="9" fill="url(#logo-g)"/>
+      <line x1="10" y1="10" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="18" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="26" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="10" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="18" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="26" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="19" y1="15" x2="27" y2="18" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="19" y1="22" x2="27" y2="18" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <circle cx="10" cy="10" r="2.4" fill="white"/>
+      <circle cx="10" cy="18" r="2.4" fill="white"/>
+      <circle cx="10" cy="26" r="2.4" fill="white"/>
+      <circle cx="19" cy="15" r="2.4" fill="white"/>
+      <circle cx="19" cy="22" r="2.4" fill="white"/>
+      <circle cx="27" cy="18" r="2.9" fill="white"/>
+    </svg>
+    <span class="nav-logo-wordmark">AI Integration</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
@@ -669,14 +917,6 @@
 <!-- STATS -->
 <div class="stats-bar">
   <div class="stats-grid">
-    <div class="stat-divider">
-      <div class="stat-num" data-target="50" data-suffix="+">0+</div>
-      <div class="stat-label">Businesses Automated</div>
-    </div>
-    <div class="stat-divider">
-      <div class="stat-num" data-target="200" data-suffix="%">0%</div>
-      <div class="stat-label">Avg. Efficiency Gain</div>
-    </div>
     <div class="stat-divider">
       <div class="stat-num" data-target="24" data-suffix="/7">0/7</div>
       <div class="stat-label">AI Always On</div>
@@ -841,7 +1081,7 @@
         </div>
         <div class="contact-detail">
           <div class="cd-icon">🌏</div>
-          <span>Serving businesses Australia-wide</span>
+          <span>Serving businesses in Australia &amp; worldwide</span>
         </div>
       </div>
 
@@ -863,9 +1103,67 @@
   </section>
 </div>
 
+<!-- CHAT WIDGET -->
+<button class="chat-fab" id="chat-fab" aria-label="Open chat">
+  <svg class="icon-chat" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+  <svg class="icon-close" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+</button>
+
+<div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with NSP IT">
+  <div class="chat-header">
+    <div class="chat-bot-avatar">🤖</div>
+    <div class="chat-header-info">
+      <h4>Ask about NSP IT services</h4>
+      <span>Online now</span>
+    </div>
+    <button class="chat-close-btn" id="chat-close" aria-label="Close chat">&times;</button>
+  </div>
+
+  <div class="chat-messages" id="chat-messages"></div>
+
+  <div class="chat-suggestions" id="chat-suggestions">
+    <button class="chat-suggestion" data-msg="What services do you offer?">Services</button>
+    <button class="chat-suggestion" data-msg="How do I get started?">Get started</button>
+    <button class="chat-suggestion" data-msg="How much does it cost?">Pricing</button>
+    <button class="chat-suggestion" data-msg="How does AI automation work?">Automation</button>
+  </div>
+
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-input" type="text" placeholder="Ask a question..." autocomplete="off" maxlength="300">
+    <button class="chat-send-btn" id="chat-send" aria-label="Send">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
-  <div class="foot-logo">AI Integration</div>
+  <div class="foot-logo">
+    <svg viewBox="0 0 36 36" width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="foot-logo-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6366f1"/>
+          <stop offset="100%" stop-color="#06b6d4"/>
+        </linearGradient>
+      </defs>
+      <rect width="36" height="36" rx="9" fill="url(#foot-logo-g)"/>
+      <line x1="10" y1="10" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="18" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="26" x2="19" y2="15" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="10" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="18" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="10" y1="26" x2="19" y2="22" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="19" y1="15" x2="27" y2="18" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <line x1="19" y1="22" x2="27" y2="18" stroke="rgba(255,255,255,0.5)" stroke-width="1.15"/>
+      <circle cx="10" cy="10" r="2.4" fill="white"/>
+      <circle cx="10" cy="18" r="2.4" fill="white"/>
+      <circle cx="10" cy="26" r="2.4" fill="white"/>
+      <circle cx="19" cy="15" r="2.4" fill="white"/>
+      <circle cx="19" cy="22" r="2.4" fill="white"/>
+      <circle cx="27" cy="18" r="2.9" fill="white"/>
+    </svg>
+    <span class="foot-logo-wordmark">AI Integration</span>
+  </div>
   <p>&copy; 2026 NSP IT &mdash; Next Step IT Solutions. All rights reserved.</p>
 </footer>
 
@@ -973,6 +1271,157 @@ const counterObs = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.6 });
 document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
+
+/* ---- Chat Widget ---- */
+(function () {
+  const fab      = document.getElementById('chat-fab');
+  const panel    = document.getElementById('chat-panel');
+  const closeBtn = document.getElementById('chat-close');
+  const messages = document.getElementById('chat-messages');
+  const input    = document.getElementById('chat-input');
+  const sendBtn  = document.getElementById('chat-send');
+  const suggsEl  = document.getElementById('chat-suggestions');
+
+  let opened = false;
+
+  const RESPONSES = [
+    {
+      match: /\b(hi|hello|hey|howdy|g'day)\b/i,
+      reply: "G'day! 👋 I'm the NSP IT assistant. I can tell you about our AI automation services, how to get started, or anything else about Next Step IT Solutions. What would you like to know?"
+    },
+    {
+      match: /\b(service|offer|do|provide|what)\b/i,
+      reply: "NSP IT offers a full suite of AI-powered services:\n\n• 🤖 AI Support Chatbots — 24/7 customer service bots trained on your content\n• ⚙️ Workflow Automation — automate emails, docs & CRM tasks\n• 🔗 Custom AI Integrations — AI built into your existing platforms\n• 🧠 AI Knowledge Assistants — trained on your PDFs & documents\n• ✍️ AI Content Generation — marketing, reporting & comms\n• 📊 Analytics & Insights — AI-driven dashboards\n\nWant more detail on any of these?"
+    },
+    {
+      match: /\b(price|cost|pricing|fee|charge|expensive|cheap|afford|budget)\b/i,
+      reply: "Our pricing is tailored to the size and scope of each project — so there's no one-size-fits-all rate. We work with small and medium businesses, so solutions are always scaled to your budget.\n\nThe best way to get an accurate quote is to book a free consultation. Would you like to do that? 👉"
+    },
+    {
+      match: /\b(start|begin|get started|sign up|consult|book|appointment|meeting)\b/i,
+      reply: "Getting started is easy! Just scroll down to our Contact section and send us a message, or email us directly at info@integration.help.\n\nWe offer a free initial consultation where we'll learn about your business and recommend the right AI solutions. No obligation! 🚀"
+    },
+    {
+      match: /\b(automat|workflow|process|manual|task|repetiti)\b/i,
+      reply: "Great question! Workflow automation is one of our most popular services. We connect AI to your existing tools — emails, spreadsheets, CRMs like HubSpot or Salesforce — to handle repetitive tasks automatically.\n\nMost clients save 5–15 hours per week per team member within the first month. Want to know what that could look like for your business?"
+    },
+    {
+      match: /\b(chatbot|bot|chat|support|customer|customer service)\b/i,
+      reply: "Our AI chatbots are trained on your business's own content — your website, FAQs, product docs — so they give accurate, on-brand answers 24/7.\n\nThey can handle customer inquiries, qualify leads, and even book appointments, all without any human involvement. Want to explore one for your site?"
+    },
+    {
+      match: /\b(data|document|pdf|file|knowledge|train)\b/i,
+      reply: "We build AI Knowledge Assistants that are trained specifically on your data — PDFs, internal docs, wikis, product manuals, you name it.\n\nYour team (or your customers) can then ask the AI questions and get accurate, sourced answers instantly. It's like having a search engine that actually understands context. 🧠"
+    },
+    {
+      match: /\b(content|writ|copy|marketing|blog|post|social|generat)\b/i,
+      reply: "Our AI Content Generation service helps with:\n\n• Blog posts & articles\n• Social media copy\n• Email campaigns\n• Product descriptions\n• Reports & summaries\n\nAll in your brand's tone of voice. It dramatically speeds up your content pipeline. Interested?"
+    },
+    {
+      match: /\b(analytic|dashboard|insight|report|data|metric|kpi)\b/i,
+      reply: "Our Analytics & Insights service turns your raw business data into easy-to-read dashboards with AI-driven insights — so you can spot trends, issues, and opportunities without needing a data analyst.\n\nWe integrate with most common tools (Google Analytics, CRMs, spreadsheets, databases). Want to know more?"
+    },
+    {
+      match: /\b(contact|email|phone|reach|touch|talk)\b/i,
+      reply: "You can reach us at:\n\n✉️ info@integration.help\n\nOr use the contact form at the bottom of this page. We typically respond within one business day and are always happy to jump on a quick call to discuss your needs."
+    },
+    {
+      match: /\b(secure|safe|privacy|data protect|complian|gdpr)\b/i,
+      reply: "Security is a priority for us. All our AI integrations follow industry best practices — data in transit is encrypted, we don't store sensitive customer data beyond what's needed, and we can work to meet your specific compliance requirements. Happy to discuss specifics on a call."
+    },
+    {
+      match: /\b(how long|timeframe|timeline|fast|quick|when|deploy)\b/i,
+      reply: "Most of our solutions are deployed within days, not months. A standard chatbot or workflow automation can typically be live within 1–2 weeks. Larger custom integrations may take 3–6 weeks depending on complexity.\n\nWe'll give you a clear timeline in your free consultation. 📅"
+    },
+    {
+      match: /\b(small business|sme|smb|medium|startup|solo|local)\b/i,
+      reply: "SMBs are exactly who we built NSP IT for! Many AI solutions are designed for enterprise budgets — we specifically package them to be accessible and practical for smaller teams.\n\nWhether you have 2 staff or 200, we can find something that makes a real difference."
+    },
+    {
+      match: /\b(thank|thanks|cheers|awesome|great|perfect|brilliant)\b/i,
+      reply: "Glad I could help! 😊 If you'd like to take the next step, book a free consultation and we'll map out exactly how AI can work for your business. Anything else I can answer?"
+    }
+  ];
+
+  const DEFAULT = "That's a great question! I want to make sure I give you the right answer. For specifics, I'd recommend reaching out directly at info@integration.help or booking a free consultation — our team will get back to you quickly. Is there anything else I can help with?";
+
+  function addMsg(text, who) {
+    const wrap = document.createElement('div');
+    wrap.className = `chat-msg ${who}`;
+    const avatar = document.createElement('div');
+    avatar.className = 'msg-avatar';
+    avatar.textContent = who === 'bot' ? '🤖' : '👤';
+    const bubble = document.createElement('div');
+    bubble.className = 'msg-bubble';
+    bubble.style.whiteSpace = 'pre-wrap';
+    bubble.textContent = text;
+    wrap.appendChild(avatar);
+    wrap.appendChild(bubble);
+    messages.appendChild(wrap);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function showTyping() {
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-msg bot';
+    wrap.id = 'typing-indicator';
+    const avatar = document.createElement('div');
+    avatar.className = 'msg-avatar';
+    avatar.textContent = '🤖';
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-typing';
+    bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    wrap.appendChild(avatar);
+    wrap.appendChild(bubble);
+    messages.appendChild(wrap);
+    messages.scrollTop = messages.scrollHeight;
+    return wrap;
+  }
+
+  function botReply(text) {
+    const typingEl = showTyping();
+    const delay = 600 + Math.min(text.length * 8, 900);
+    setTimeout(() => {
+      typingEl.remove();
+      addMsg(text, 'bot');
+    }, delay);
+  }
+
+  function getReply(msg) {
+    const m = msg.trim();
+    for (const r of RESPONSES) {
+      if (r.match.test(m)) return r.reply;
+    }
+    return DEFAULT;
+  }
+
+  function send(text) {
+    const msg = (text || input.value).trim();
+    if (!msg) return;
+    input.value = '';
+    suggsEl.style.display = 'none';
+    addMsg(msg, 'user');
+    botReply(getReply(msg));
+  }
+
+  function toggleChat() {
+    opened = !opened;
+    fab.classList.toggle('open', opened);
+    panel.classList.toggle('open', opened);
+    if (opened && messages.children.length === 0) {
+      setTimeout(() => botReply("Hi! 👋 How can I help you learn about NSP IT services today?"), 300);
+    }
+    if (opened) setTimeout(() => input.focus(), 350);
+  }
+
+  fab.addEventListener('click', toggleChat);
+  closeBtn.addEventListener('click', () => { opened = false; fab.classList.remove('open'); panel.classList.remove('open'); });
+  sendBtn.addEventListener('click', () => send());
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+  suggsEl.querySelectorAll('.chat-suggestion').forEach(btn => {
+    btn.addEventListener('click', () => send(btn.dataset.msg));
+  });
+})();
 </script>
 </body>
 </html>
